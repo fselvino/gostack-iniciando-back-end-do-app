@@ -8,30 +8,29 @@
 
 import { Router } from 'express';
 import { parseISO } from 'date-fns';
+import { getCustomRepository } from 'typeorm';
 
 import AppointmetsRepository from '../repositories/AppointmentsRepository';
 import CreateAppointmentService from '../services/CreateAppointmetService';
 
 const appointmetRoutes = Router();
-const appointmetRepository = new AppointmetsRepository();
 
-appointmetRoutes.get('/', (request, response) => {
-  const appointments = appointmetRepository.all();
+appointmetRoutes.get('/', async (request, response) => {
+  const appointmentsRepository = getCustomRepository(AppointmetsRepository);
+  const appointments = await appointmentsRepository.find();
   return response.json(appointments);
 });
 
 // rota de agendamentos
-appointmetRoutes.post('/', (request, response) => {
+appointmetRoutes.post('/', async (request, response) => {
   try {
     const { provider, date } = request.body;
 
     // formata a data vindo da aplicaçao
     const parseDate = parseISO(date);
-    const createAppointment = new CreateAppointmentService(
-      appointmetRepository,
-    );
 
-    const appointment = createAppointment.execute({
+    const createAppointment = new CreateAppointmentService();
+    const appointment = await createAppointment.execute({
       date: parseDate,
       provider,
     });

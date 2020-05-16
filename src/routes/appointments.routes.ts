@@ -24,7 +24,7 @@ appointmetRoutes.get('/', async (request, response) => {
 // rota de agendamentos
 appointmetRoutes.post('/', async (request, response) => {
   try {
-    const { provider, date } = request.body;
+    const { provider_id, date } = request.body;
 
     // formata a data vindo da aplicaçao
     const parseDate = parseISO(date);
@@ -32,7 +32,7 @@ appointmetRoutes.post('/', async (request, response) => {
     const createAppointment = new CreateAppointmentService();
     const appointment = await createAppointment.execute({
       date: parseDate,
-      provider,
+      provider_id,
     });
 
     return response.json(appointment);

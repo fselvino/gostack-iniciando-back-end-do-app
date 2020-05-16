@@ -24,8 +24,6 @@ class CreateUserService {
 
     const hashedPassword = await hash(password, 8);
 
-    console.log(hashedPassword);
-
     // cria o usuario
     const user = usersRepository.create({
       name,

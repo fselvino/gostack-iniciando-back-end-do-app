@@ -1,11 +1,3 @@
-/**
- * Soc: Separation od Concerns - Separançao de preocupaçoes
- */
-
-// DTO - Data Transfer Object - Objeto de transferencia de dados
-
-// Rota: Recebe a requisiçao, chamar outro arquivo, devolver uma resposta
-
 import { Router } from 'express';
 
 import CreateUserService from '../services/CreateUserSevice';

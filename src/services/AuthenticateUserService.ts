@@ -4,6 +4,8 @@ import { sign } from 'jsonwebtoken';
 import User from '../models/User';
 import authConfig from '../config/auth';
 
+import AppError from '../errors/AppError';
+
 interface Request {
   email: string;
   password: string;
@@ -23,7 +25,7 @@ class AuthenticateUserService {
     });
 
     if (!user) {
-      throw new Error('Incorrect email/password combination');
+      throw new AppError('Incorrect email/password combination', 401);
     }
 
     // user.password - Senha criptografada
@@ -33,7 +35,7 @@ class AuthenticateUserService {
 
     // se não passar retorna erro
     if (!passwordMacthed) {
-      throw new Error('Incorrect email/password combination');
+      throw new AppError('Incorrect email/password combination', 401);
     }
 
     const { secret, expiresIn } = authConfig.jwt;

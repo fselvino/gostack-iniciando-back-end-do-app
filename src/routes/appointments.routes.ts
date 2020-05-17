@@ -27,21 +27,17 @@ appointmetRoutes.get('/', async (request, response) => {
 
 // rota de agendamentos
 appointmetRoutes.post('/', async (request, response) => {
-  try {
-    const { provider_id, date } = request.body;
+  const { provider_id, date } = request.body;
 
-    // formata a data vindo da aplicaçao
-    const parseDate = parseISO(date);
+  // formata a data vindo da aplicaçao
+  const parseDate = parseISO(date);
 
-    const createAppointment = new CreateAppointmentService();
-    const appointment = await createAppointment.execute({
-      date: parseDate,
-      provider_id,
-    });
+  const createAppointment = new CreateAppointmentService();
+  const appointment = await createAppointment.execute({
+    date: parseDate,
+    provider_id,
+  });
 
-    return response.json(appointment);
-  } catch (err) {
-    return response.status(400).json({ error: err.message });
-  }
+  return response.json(appointment);
 });
 export default appointmetRoutes;

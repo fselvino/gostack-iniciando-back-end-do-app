@@ -1,9 +1,7 @@
 import { startOfHour } from 'date-fns';
-import { getCustomRepository } from 'typeorm';
-
 import AppError from '@shared/errors/AppError';
 import Appointment from '../infra/typeorm/entities/Appointment';
-import AppointmentsRepository from '../repositories/AppointmentsRepository';
+import IAppointmentsRepository from '../repositories/IAppointementsRepository';
 
 /**
  * [ * ] Recebimento das informaçoes
@@ -11,7 +9,7 @@ import AppointmentsRepository from '../repositories/AppointmentsRepository';
  * [ ] Acesso ao repositorio
  */
 
-interface RequestDTO {
+interface IRequest {
   date: Date;
   provider_id: string;
 }
@@ -19,16 +17,13 @@ interface RequestDTO {
  * Dependency Inversion (SOLID)
  */
 class CreateAppointmentService {
-  public async execute({
-    date,
-    provider_id,
-  }: RequestDTO): Promise<Appointment> {
-    const appointmensReprossitory = getCustomRepository(AppointmentsRepository);
+  constructor(private appointmentsRepository: IAppointmentsRepository) { }
 
+  public async execute({ date, provider_id }: IRequest): Promise<Appointment> {
     const appointmentDate = startOfHour(date);
 
     // realiza a busca por uma data ja agendada
-    const findAppointmentInSameDate = await appointmensReprossitory.findByDate(
+    const findAppointmentInSameDate = await this.appointmentsRepository.findByDate(
       appointmentDate,
     );
 
@@ -37,7 +32,7 @@ class CreateAppointmentService {
       throw new AppError('Já existe um agendamento para esse horário');
     }
 
-    const appointment = await appointmensReprossitory.create({
+    const appointment = await this.appointmentsRepository.create({
       provider_id,
       date: appointmentDate,
     });

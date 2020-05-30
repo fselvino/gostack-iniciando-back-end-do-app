@@ -1,5 +1,6 @@
 import { startOfHour } from 'date-fns';
 import { getCustomRepository } from 'typeorm';
+
 import AppError from '@shared/errors/AppError';
 import Appointment from '../infra/typeorm/entities/Appointment';
 import AppointmentsRepository from '../repositories/AppointmentsRepository';
@@ -36,12 +37,10 @@ class CreateAppointmentService {
       throw new AppError('Já existe um agendamento para esse horário');
     }
 
-    const appointment = appointmensReprossitory.create({
+    const appointment = await appointmensReprossitory.create({
       provider_id,
       date: appointmentDate,
     });
-
-    await appointmensReprossitory.save(appointment);
 
     return appointment;
   }

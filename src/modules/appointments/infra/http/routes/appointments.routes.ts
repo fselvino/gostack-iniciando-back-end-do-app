@@ -15,7 +15,6 @@ import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAut
 import AppointmentsRepository from '@modules/appointments/infra/typeorm/repositories/AppointmentsRepository';
 
 const appointmetRoutes = Router();
-const appointmentsRepository = new AppointmentsRepository();
 
 appointmetRoutes.use(ensureAuthenticated);
 
@@ -31,6 +30,7 @@ appointmetRoutes.post('/', async (request, response) => {
   // formata a data vindo da aplicaçao
   const parseDate = parseISO(date);
 
+  const appointmentsRepository = new AppointmentsRepository();
   const createAppointment = new CreateAppointmentService(
     appointmentsRepository,
   );

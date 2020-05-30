@@ -1,23 +1,21 @@
-import { getRepository } from 'typeorm';
 import { hash } from 'bcryptjs';
 import User from '@modules/users/infra/typeorm/entities/User';
 
 import AppError from '@shared/errors/AppError';
+import IUsersRepository from '@modules/users/repositories/IUsersRespository';
 
-interface Request {
+interface IRequest {
   name: string;
   email: string;
   password: string;
 }
 
 class CreateUserService {
-  public async execute({ name, email, password }: Request): Promise<User> {
-    const usersRepository = getRepository(User);
+  constructor(private usersRepository: IUsersRepository) { }
 
+  public async execute({ name, email, password }: IRequest): Promise<User> {
     // busca pelo usuario informado pelo usuario
-    const checkUserExists = await usersRepository.findOne({
-      where: { email },
-    });
+    const checkUserExists = await this.usersRepository.findByEmail(email);
 
     // se o usuario existir retorna erro
     if (checkUserExists) {
@@ -27,14 +25,11 @@ class CreateUserService {
     const hashedPassword = await hash(password, 8);
 
     // cria o usuario
-    const user = usersRepository.create({
+    const user = await this.usersRepository.create({
       name,
       email,
       password: hashedPassword,
     });
-
-    // persiste o usuario no banco
-    await usersRepository.save(user);
 
     return user;
   }

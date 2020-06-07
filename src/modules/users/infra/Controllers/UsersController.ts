@@ -18,4 +18,9 @@ export default class UsersController {
     delete user.password;
     return response.json(user);
   }
+
+  public async index(request: Request, response: Response): Promise<Response> {
+    const appointments = await appointmentsRepository.find();
+    return response.json(appointments);
+  }
 }

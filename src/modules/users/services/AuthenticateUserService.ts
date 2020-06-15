@@ -5,6 +5,7 @@ import authConfig from '@config/auth';
 import { injectable, inject } from 'tsyringe';
 
 import IUsersRepository from '@modules/users/repositories/IUsersRespository';
+import IHashProvider from '@modules/users/providers/hashProvider/models/IHashProvider';
 import AppError from '@shared/errors/AppError';
 
 interface IRequest {
@@ -22,6 +23,8 @@ class AuthenticateUserService {
   constructor(
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
+    @inject('HashProvider')
+    private hashProvider: IHashProvider,
   ) { }
 
   public async execute({ email, password }: IRequest): Promise<IResponse> {
@@ -34,7 +37,10 @@ class AuthenticateUserService {
     // user.password - Senha criptografada
     // password - Senha não-criptografada
 
-    const passwordMacthed = await compare(password, user.password);
+    const passwordMacthed = await this.hashProvider.compareHash(
+      password,
+      user.password,
+    );
 
     // se não passar retorna erro
     if (!passwordMacthed) {

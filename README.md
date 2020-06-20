@@ -1,13 +1,13 @@
 # Recuperação de senha
 
-//RF - requesitos funcionais define quais funcionalidade teremos na recuperaçao de senha;
+ //RF - requesitos funcionais define quais funcionalidade teremos na recuperaçao de senha;
   **RF**
 
   - O usuário deve poder recuper sua senha informando o seu e-mail;
   - O usuário deve receber um e-mail com instruçoes de recuperação de senha;
   - O usuário deve pode resetar sua senha;
 
-//Requesitos não funcionais
+ //Requesitos não funcionais
   **RNF**
 
   - Utilizar Mailtrap para testar envios em ambientes de dev;
@@ -15,7 +15,7 @@
   - O envio de e-mail deve acontecer em segundo plano (background job);
 
 
-//Regras de negócio;
+ //Regras de negócio;
   **RN**
 
   - O link enviado por email para resetar senha, deve expirar em 2h;
@@ -36,20 +36,20 @@
 
 # Painel do prestador
 
-**RF**
+ **RF**
 
   - O usuario deve poder listar os agendamentos de um dia expecifico
   - O prestador deve receber uma notificação sempre que houver um novo agendamento
   - O prestador deve poder visualizar as notificações não lidas
 
-**RNF**
+ **RNF**
 
   - Os agendamentos do prestador no dia devem ser armazenados em cache
   - As notificaçoes do prestador devem ser armazenadas no MongoDB
   - As notificações do prestador devem ser enviadas em tempo-real utilizando Socket.io
 
 
-**RN**
+ **RN**
 
   - A notificaçao de ter um status de lida ou não lida para que o prestador possa controlar
 

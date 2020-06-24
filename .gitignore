@@ -1,5 +1,5 @@
 node_modules
+coverage
 ormconfig.json
 tmp/*
 !tmp/.gitkeep
-/coverage/lcov-report

@@ -57,7 +57,7 @@ describe('UpdateUserAvatar', () => {
     const user = await fakeUsersRepository.create({
       name: 'Johon Doe',
       email: 'johondoe@example.com.br',
-      password: '123456-',
+      password: '123456',
     });
 
     await updateUserAvatar.execute({

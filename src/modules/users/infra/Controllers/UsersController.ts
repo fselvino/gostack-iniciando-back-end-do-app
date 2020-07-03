@@ -19,8 +19,8 @@ export default class UsersController {
     return response.json(user);
   }
 
-  public async index(request: Request, response: Response): Promise<Response> {
-    const appointments = await appointmentsRepository.find();
-    return response.json(appointments);
-  }
+  // public async index(request: Request, response: Response): Promise<Response> {
+  //   const appointments = await appointmentsRepository.find();
+  //   return response.json(appointments);
+  // }
 }

@@ -1,6 +1,6 @@
 # Recuperação de senha
 
- //RF - requesitos funcionais define quais funcionalidade teremos na recuperaçao de senha;
+ // RF - requesitos funcionais define quais funcionalidade teremos na recuperaçao de senha;
   **RF**
 
   - O usuário deve poder recuper sua senha informando o seu e-mail;

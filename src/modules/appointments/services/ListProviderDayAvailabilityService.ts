@@ -40,6 +40,8 @@ class ListProviderDayAvailabilityService {
         day,
       },
     );
+
+    // console.log(appointments);
     const hourStart = 8;
     const eachHourArray = Array.from(
       { length: 10 },
@@ -47,14 +49,15 @@ class ListProviderDayAvailabilityService {
     );
     const currentDate = new Date(Date.now());
     // console.log(eachHourArray);
-    const availablility = eachHourArray.map(hour => {
+    const availablility = await eachHourArray.map(hour => {
       const hasAppointmentInHour = appointments.find(
         appointment => getHours(appointment.date) === hour,
       );
 
       // teremos algo assim 2020-05-20 08:00:00
+
       const compareDate = new Date(year, month - 1, day, hour);
-      // console.log(compareDate);
+
       return {
         hour,
         available: !hasAppointmentInHour && isAfter(compareDate, currentDate),

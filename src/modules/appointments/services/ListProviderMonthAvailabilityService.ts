@@ -33,12 +33,11 @@ class ListProviderMonthAvailabilityService {
     const appointments = await this.appointmentsRepository.findAllInMonthFromProvider(
       {
         provider_id,
-        month,
         year,
+        month,
       },
     );
-    // console.log(appointments);
-
+    console.log(appointments);
     const numberOfDaysInMonth = getDaysInMonth(new Date(year, month - 1));
     const eachDayArray = Array.from(
       { length: numberOfDaysInMonth },

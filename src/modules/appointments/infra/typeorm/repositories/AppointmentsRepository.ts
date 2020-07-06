@@ -22,6 +22,7 @@ class AppointmentsRepository implements IAppointmentsRepository {
     const findAppointment = await this.ormRepository.findOne({
       where: { date },
     });
+
     return findAppointment;
   }
 
@@ -40,6 +41,7 @@ class AppointmentsRepository implements IAppointmentsRepository {
         ),
       },
     });
+
     return appointments;
   }
 
@@ -61,6 +63,7 @@ class AppointmentsRepository implements IAppointmentsRepository {
         ),
       },
     });
+
     return appointments;
   }
 

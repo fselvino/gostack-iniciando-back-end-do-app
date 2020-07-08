@@ -1,15 +1,20 @@
 import AppError from '@shared/errors/AppError';
+
+import FakeNotificationsRepository from '@modules/notifications/repositories/fakes/FakesNotificationsRepository';
 import FakeAppointmentsRepository from '../repositories/fakes/FakeAppointmentsRepository';
 import CreateAppointmentService from './CreateAppointmetService';
 
+let fakeNotificationsRepository: FakeNotificationsRepository;
 let fakeAppointmentsRepository: FakeAppointmentsRepository;
 let createAppointment: CreateAppointmentService;
 
 describe('CreateAppointment', () => {
   beforeEach(() => {
     fakeAppointmentsRepository = new FakeAppointmentsRepository();
+    fakeNotificationsRepository = new FakeNotificationsRepository();
     createAppointment = new CreateAppointmentService(
       fakeAppointmentsRepository,
+      fakeNotificationsRepository,
     );
   });
 
@@ -46,7 +51,7 @@ describe('CreateAppointment', () => {
     //   return data;
     // });
     const appointmentDate = new Date(2020, 7, 5, 9);
-    console.log(appointmentDate);
+    // console.log(appointmentDate);
     await createAppointment.execute({
       date: appointmentDate,
       user_id: 'user-id',

@@ -7,6 +7,7 @@
 // Rota: Recebe a requisiçao, chamar outro arquivo, devolver uma resposta
 
 import { Router } from 'express';
+import { celebrate, Segments, Joi } from 'celebrate';
 
 import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAuthenticated';
 import AppointmetsController from '../../controllers/AppointmetsController';
@@ -18,6 +19,15 @@ const providerAppointmentsController = new ProviderAppointmentsController();
 
 appointmetRoutes.use(ensureAuthenticated);
 
-appointmetRoutes.post('/', appointmentsController.create);
+appointmetRoutes.post(
+  '/',
+  celebrate({
+    [Segments.BODY]: {
+      provider_id: Joi.string().uuid().required(),
+      date: Joi.date(),
+    },
+  }),
+  appointmentsController.create,
+);
 appointmetRoutes.get('/me', providerAppointmentsController.index);
 export default appointmetRoutes;

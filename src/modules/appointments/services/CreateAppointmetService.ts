@@ -57,6 +57,7 @@ class CreateAppointmentService {
     // realiza a busca por uma data ja agendada
     const findAppointmentInSameDate = await this.appointmentsRepository.findByDate(
       appointmentDate,
+      provider_id
     );
 
     // Se existir a data retorna erro de agendamento.
